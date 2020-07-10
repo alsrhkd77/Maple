@@ -5,4 +5,4 @@ steps:
   args: ["--cache=true", "--cache-ttl=48h", "--destination=gcr.io/trusty-obelisk-282904/maple"]
   # Deploy container image to Cloud Run
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ['beta', 'run', 'deploy', 'todo', '--image', 'gcr.io/trusty-obelisk-282904/maple', '--region', 'us-central1', '--allow-unauthenticated', '--platform', 'managed']
+  args: ['beta', 'run', 'deploy', 'maple', '--image', 'gcr.io/trusty-obelisk-282904/maple', '--region', 'us-central1', '--allow-unauthenticated', '--platform', 'managed']
