@@ -22,5 +22,11 @@ def hello_world():
     return render_template('index.html', context=context)
 
 
+@app.route('/world', methods=['GET'])
+def hello_maple():
+    context = {'server_time': format_server_time()}
+    return render_template('index.html', context=context)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

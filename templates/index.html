@@ -1,11 +1,533 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>AWAKE</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
-<body class="full-screen flex-center">
-  <h1 class="text-xl">Flask + Firebase</h1>
-  <h3>{{ context.server_time }}</h3>
+<body>
+
+<!-- Header -->
+<div class="border-bottom shadow-sm">
+    <div class="container">
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenu2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            월드 선택
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <!-- 메이플 홈페이지 링크 & 로고 -->
+                            <div class="text-center">
+                                <a class="text-muted" href="https://maplestory.nexon.com/Home/Main">
+                                    <img src="https://ssl.nx.com/s2/game/maplestory/renewal/common/logo.png"
+                                         alt="메이플스토리" height="55vw">
+                                </a>
+                            </div>
+                            <!-- 루나 -->
+                            <button class="dropdown-item" type="button">
+                                <div class="text-center">
+                                    <a class="text-muted" href="/world?world=루나">
+                                        <img src="https://w.namu.la/s/f1ce5dc0abed9a5be5b197b7bb7c5ccd9297a5c19f790d91ab9f38724b566a00600b8175e825de45a9ab0ed92370142224d9906e5b338f4ef9486daa5f68614e118a8367a0b5bed5e7266a4db7c94574c8f079856a5d497398ff7d34388d32ba"
+                                             alt="루나" height="55vw">
+                                    </a>
+                                </div>
+                            </button>
+                            <!-- 버닝 -->
+                            <button class="dropdown-item" type="button">
+                                <div class="text-center">
+                                    <a class="text-muted" href="/world?world=버닝">
+                                        <img src="https://w.namu.la/s/db877060b8416ac4d39b6e144dd38ec200021af5c4b0929f65c7dbaf94c3e6f249f008d9dec022e8ec9bdeb5bc0eb92426d91011e26128531659efaecb8bcd36787fa22434ebc37477a6eae1bc37b4bba0b05f09ebb4ab1d3b462e7fc0b9f0d1"
+                                             alt="버닝" height="55vw">
+                                    </a>
+                                </div>
+                            </button>
+                            <!-- 스카니아 -->
+                            <button class="dropdown-item" type="button">
+                                <div class="text-center">
+                                    <a class="text-muted" href="/world?world=스카니아">
+                                        <img src="https://ww.namu.la/s/9a48178bb9e945f1890fbf976a6df3ca6e9753d3237ba70b384fb868ddbbd3cd06934838bcbc48b805284bb656b2c6745fab709431005db8980534d423bae873af6ffb1a01ef31087660d2b3b126104c25952b3bd614de6019d02358b868a641"
+                                             alt="스카니아" height="55vw">
+                                    </a>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <!-- 페이지 로고 -->
+                    <a class="blog-header-logo text-dark" href="#">
+                        <row>
+                            <h1 class="font-weight-bolder"
+                                style="font-size: x-large">AWAKE</h1>
+                            <p class="font-italic" style="font-size: small">Ver Alpha</p>
+                            <!-- <p class="font-italic" style="font-size: small">별빛밤하늘 햄뮤</p> -->
+                        </row>
+                    </a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <!-- 로그인 / 로그아웃 -->
+                    <a class="btn btn-outline-danger" href="#">Sign out</a>
+                </div>
+            </div>
+        </header>
+    </div>
+</div>
+
+<!-- Sidebar
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="sidebar-sticky pt-3">
+        <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+
+        </h5>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Current month
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Last quarter
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Social engagement
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Year-end sale
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+-->
+<main role="main">
+    <form>
+        <row class="d-flex justify-content-around flex-wrap">
+            <!-- 판매 목록(치장) -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body table-responsive">
+                        <h2>백공의 주화 상점</h2>
+                        <table class="text-center table table-striped table-sm">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>구매 예정</th>
+                                <th>아이템명</th>
+                                <th>각성주화 개수</th>
+                                <th>구매 가능 수</th>
+                                <th>구매 예정 수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_2"></td>
+                                <td>아케인심볼:츄츄 아일랜드</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_2" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_3"></td>
+                                <td>아케인심볼:레헬른</td>
+                                <td>50</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_3" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            <tr>
+                                <td> <input type="checkbox" id="check_store1_1"></td>
+                                <td>아케인심볼:소멸의 여로</td>
+                                <td>30</td>
+                                <td>50개</td>
+                                <td><input class="w-25" type="text" id="text_store1_1" value="50"> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 판매 목록(치장) -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body table-responsive">
+                        <h2>치장 상점</h2>
+                        <table class="table table-striped table-sm">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>구매 예정</th>
+                                <th>아이템명</th>
+                                <th>각성주화 개수</th>
+                                <th>구매 가능 수</th>
+                                <th>구매 예정 수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                                <td>sit</td>
+                            </tr>
+                            <tr>
+                                <td>1,002</td>
+                                <td>amet</td>
+                                <td>consectetur</td>
+                                <td>adipiscing</td>
+                                <td>elit</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>Integer</td>
+                                <td>nec</td>
+                                <td>odio</td>
+                                <td>Praesent</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>libero</td>
+                                <td>Sed</td>
+                                <td>cursus</td>
+                                <td>ante</td>
+                            </tr>
+                            <tr>
+                                <td>1,004</td>
+                                <td>dapibus</td>
+                                <td>diam</td>
+                                <td>Sed</td>
+                                <td>nisi</td>
+                            </tr>
+                            <tr>
+                                <td>1,005</td>
+                                <td>Nulla</td>
+                                <td>quis</td>
+                                <td>sem</td>
+                                <td>at</td>
+                            </tr>
+                            <tr>
+                                <td>1,006</td>
+                                <td>nibh</td>
+                                <td>elementum</td>
+                                <td>imperdiet</td>
+                                <td>Duis</td>
+                            </tr>
+                            <tr>
+                                <td>1,007</td>
+                                <td>sagittis</td>
+                                <td>ipsum</td>
+                                <td>Praesent</td>
+                                <td>mauris</td>
+                            </tr>
+                            <tr>
+                                <td>1,008</td>
+                                <td>Fusce</td>
+                                <td>nec</td>
+                                <td>tellus</td>
+                                <td>sed</td>
+                            </tr>
+                            <tr>
+                                <td>1,009</td>
+                                <td>augue</td>
+                                <td>semper</td>
+                                <td>porta</td>
+                                <td>Mauris</td>
+                            </tr>
+                            <tr>
+                                <td>1,010</td>
+                                <td>massa</td>
+                                <td>Vestibulum</td>
+                                <td>lacinia</td>
+                                <td>arcu</td>
+                            </tr>
+                            <tr>
+                                <td>1,011</td>
+                                <td>eget</td>
+                                <td>nulla</td>
+                                <td>Class</td>
+                                <td>aptent</td>
+                            </tr>
+                            <tr>
+                                <td>1,012</td>
+                                <td>taciti</td>
+                                <td>sociosqu</td>
+                                <td>ad</td>
+                                <td>litora</td>
+                            </tr>
+                            <tr>
+                                <td>1,013</td>
+                                <td>torquent</td>
+                                <td>per</td>
+                                <td>conubia</td>
+                                <td>nostra</td>
+                            </tr>
+                            <tr>
+                                <td>1,014</td>
+                                <td>per</td>
+                                <td>inceptos</td>
+                                <td>himenaeos</td>
+                                <td>Curabitur</td>
+                            </tr>
+                            <tr>
+                                <td>1,015</td>
+                                <td>sodales</td>
+                                <td>ligula</td>
+                                <td>in</td>
+                                <td>libero</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- 판매 목록(치장) -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body table-responsive">
+                        <h2>치장 상점</h2>
+                        <table class="table table-striped table-sm">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>구매 예정</th>
+                                <th>아이템명</th>
+                                <th>각성주화 개수</th>
+                                <th>구매 가능 수</th>
+                                <th>구매 예정 수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                                <td>sit</td>
+                            </tr>
+                            <tr>
+                                <td>1,002</td>
+                                <td>amet</td>
+                                <td>consectetur</td>
+                                <td>adipiscing</td>
+                                <td>elit</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>Integer</td>
+                                <td>nec</td>
+                                <td>odio</td>
+                                <td>Praesent</td>
+                            </tr>
+                            <tr>
+                                <td>1,003</td>
+                                <td>libero</td>
+                                <td>Sed</td>
+                                <td>cursus</td>
+                                <td>ante</td>
+                            </tr>
+                            <tr>
+                                <td>1,004</td>
+                                <td>dapibus</td>
+                                <td>diam</td>
+                                <td>Sed</td>
+                                <td>nisi</td>
+                            </tr>
+                            <tr>
+                                <td>1,005</td>
+                                <td>Nulla</td>
+                                <td>quis</td>
+                                <td>sem</td>
+                                <td>at</td>
+                            </tr>
+                            <tr>
+                                <td>1,006</td>
+                                <td>nibh</td>
+                                <td>elementum</td>
+                                <td>imperdiet</td>
+                                <td>Duis</td>
+                            </tr>
+                            <tr>
+                                <td>1,007</td>
+                                <td>sagittis</td>
+                                <td>ipsum</td>
+                                <td>Praesent</td>
+                                <td>mauris</td>
+                            </tr>
+                            <tr>
+                                <td>1,008</td>
+                                <td>Fusce</td>
+                                <td>nec</td>
+                                <td>tellus</td>
+                                <td>sed</td>
+                            </tr>
+                            <tr>
+                                <td>1,009</td>
+                                <td>augue</td>
+                                <td>semper</td>
+                                <td>porta</td>
+                                <td>Mauris</td>
+                            </tr>
+                            <tr>
+                                <td>1,010</td>
+                                <td>massa</td>
+                                <td>Vestibulum</td>
+                                <td>lacinia</td>
+                                <td>arcu</td>
+                            </tr>
+                            <tr>
+                                <td>1,011</td>
+                                <td>eget</td>
+                                <td>nulla</td>
+                                <td>Class</td>
+                                <td>aptent</td>
+                            </tr>
+                            <tr>
+                                <td>1,012</td>
+                                <td>taciti</td>
+                                <td>sociosqu</td>
+                                <td>ad</td>
+                                <td>litora</td>
+                            </tr>
+                            <tr>
+                                <td>1,013</td>
+                                <td>torquent</td>
+                                <td>per</td>
+                                <td>conubia</td>
+                                <td>nostra</td>
+                            </tr>
+                            <tr>
+                                <td>1,014</td>
+                                <td>per</td>
+                                <td>inceptos</td>
+                                <td>himenaeos</td>
+                                <td>Curabitur</td>
+                            </tr>
+                            <tr>
+                                <td>1,015</td>
+                                <td>sodales</td>
+                                <td>ligula</td>
+                                <td>in</td>
+                                <td>libero</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </form>
+</main>
+
+<!-- Bootstrap scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 </body>
 </html>
