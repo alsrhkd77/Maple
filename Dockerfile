@@ -18,7 +18,7 @@ RUN mvn package -DskipTests
 FROM adoptopenjdk/openjdk11:alpine-slim
 
 # Copy the jar to the production image from the builder stage.
-COPY --from=builder /app/target/maple-*.jar /maple.jar
+COPY --from=builder /app/target/trip-story-*.jar /maple.jar
 
 # Run the web service on container startup.
 CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/maple.jar"]
