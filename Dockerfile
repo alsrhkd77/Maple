@@ -17,6 +17,8 @@ RUN mvn package -DskipTests
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
 FROM adoptopenjdk/openjdk11:alpine-slim
 
+EXPOSE $PORT
+
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /app/target/trip-story-*.jar /maple.jar
 
