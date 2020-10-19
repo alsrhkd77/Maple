@@ -1,8 +1,24 @@
 # cloudbuild.yaml
+
 steps:
-  # build & push the container image
-  - name: "gcr.io/kaniko-project/executor:latest"
-    args: [ "--cache=true", "--cache-ttl=48h", "--destination=gcr.io/trusty-obelisk-282904/maple" ]
-    # Deploy container image to Cloud Run
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: [ 'beta', 'run', 'deploy', 'maple', '--image', 'gcr.io/trusty-obelisk-282904/maple', '--region', 'us-central1', '--allow-unauthenticated', '--platform', 'managed' ]
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA', '.']
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA']
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+    - 'run'
+    - 'deploy'
+    - 'maple'
+    - '--image'
+    - 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA'
+    - '--region'
+    - 'us-central1'
+    - '--platform'
+    - 'managed'
+  images:
+  - 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA'
