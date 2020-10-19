@@ -15,10 +15,10 @@ steps:
   - 'deploy'
   - 'maple'
   - '--image'
-  - 'gcr.io/trusty-obelisk-282904/maple.jar'
+  - 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA/maple.jar'
   - '--region'
   - 'us-central1'
   - '--platform'
   - 'managed'
 images:
-- 'gcr.io/trusty-obelisk-282904/maple.jar'
+- 'gcr.io/trusty-obelisk-282904/maple:$COMMIT_SHA/maple.jar'
